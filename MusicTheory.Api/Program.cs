@@ -20,7 +20,7 @@ if (builder.Environment.IsDevelopment())
 }
 else
 {
-    baseConnectionString = builder.Configuration.GetConnectionString("CONNECTIONSTRING");
+    baseConnectionString = builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
 }
 
 // EnableRetryOnFailure

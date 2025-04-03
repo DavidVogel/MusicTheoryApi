@@ -13,15 +13,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Configure EF Core to use a database
 string? baseConnectionString;
 
-// if (builder.Environment.IsDevelopment())
-// {
-//     // Use local SQL Server
-//     baseConnectionString = builder.Configuration.GetConnectionString("LOCAL_CONNECTIONSTRING");
-// }
-// else
-// {
+if (builder.Environment.IsDevelopment())
+{
+    // Use local SQL Server
+    baseConnectionString = builder.Configuration.GetConnectionString("LOCAL_CONNECTIONSTRING");
+}
+else
+{
     baseConnectionString = builder.Configuration.GetConnectionString("CONNECTIONSTRING");
-// }
+}
 
 // EnableRetryOnFailure
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

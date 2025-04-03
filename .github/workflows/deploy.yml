@@ -1,4 +1,4 @@
-name: Build and Deploy HarmonyHub API
+name: Build and Deploy Music Theory API
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: Publish API project
-        run: dotnet publish HarmonyHub.Api/HarmonyHub.Api.csproj --configuration Release --output publish_output
+        run: dotnet publish MusicTheory.Api/MusicTheory.Api.csproj --configuration Release --output publish_output
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3

@@ -1,0 +1,8 @@
+#@MusicTheoryApi_HostAddress = https://localhost:7032
+@MusicTheoryApi_HostAddress = https://musictheoryapi.azurewebsites.net
+
+
+GET {{MusicTheoryApi_HostAddress}}/api/Progressions/cmajor/common
+Accept: application/json
+
+###

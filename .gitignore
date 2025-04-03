@@ -367,3 +367,6 @@ FodyWeavers.xsd
 
 # Visual Studio Code
 .vscode/
+
+MusicTheory.Api/appsettings.Development.json
+MusicTheory.Api/appsettings.json

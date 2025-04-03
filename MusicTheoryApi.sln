@@ -1,6 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicTheoryApi", "MusicTheoryApi\MusicTheoryApi.csproj", "{A6A0E58B-03C0-42E8-8EB4-9501432ACD41}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicTheory.Api", "MusicTheory.Api\MusicTheory.Api.csproj", "{A6A0E58B-03C0-42E8-8EB4-9501432ACD41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicTheory.Data", "MusicTheory.Data\MusicTheory.Data.csproj", "{4D6C5554-74BE-48C5-B45F-00F8443F7E54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicTheory.Domain", "MusicTheory.Domain\MusicTheory.Domain.csproj", "{F5260C62-51EC-4B83-B811-B031530279CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicTheory.Services", "MusicTheory.Services\MusicTheory.Services.csproj", "{6D22C9E3-4C67-4F35-A887-13C944CA3CAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicTheory.Tests", "MusicTheory.Tests\MusicTheory.Tests.csproj", "{64BF3D13-C512-4101-AA61-D5CF33D0F3CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +20,21 @@ Global
 		{A6A0E58B-03C0-42E8-8EB4-9501432ACD41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6A0E58B-03C0-42E8-8EB4-9501432ACD41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6A0E58B-03C0-42E8-8EB4-9501432ACD41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D6C5554-74BE-48C5-B45F-00F8443F7E54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D6C5554-74BE-48C5-B45F-00F8443F7E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D6C5554-74BE-48C5-B45F-00F8443F7E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D6C5554-74BE-48C5-B45F-00F8443F7E54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5260C62-51EC-4B83-B811-B031530279CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5260C62-51EC-4B83-B811-B031530279CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5260C62-51EC-4B83-B811-B031530279CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5260C62-51EC-4B83-B811-B031530279CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D22C9E3-4C67-4F35-A887-13C944CA3CAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D22C9E3-4C67-4F35-A887-13C944CA3CAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D22C9E3-4C67-4F35-A887-13C944CA3CAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D22C9E3-4C67-4F35-A887-13C944CA3CAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64BF3D13-C512-4101-AA61-D5CF33D0F3CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64BF3D13-C512-4101-AA61-D5CF33D0F3CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64BF3D13-C512-4101-AA61-D5CF33D0F3CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64BF3D13-C512-4101-AA61-D5CF33D0F3CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

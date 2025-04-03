@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>MusicTheory</RootNamespace>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\MusicTheory.Domain\MusicTheory.Domain.csproj"/>
+        <ProjectReference Include="..\MusicTheory.Services\MusicTheory.Services.csproj"/>
+        <ProjectReference Include="..\MusicTheory.Data\MusicTheory.Data.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.3"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.3"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.3"/>
+        <PackageReference Include="NSwag.AspNetCore" Version="14.3.0"/>
+    </ItemGroup>
+
+</Project>

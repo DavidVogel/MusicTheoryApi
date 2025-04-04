@@ -5,7 +5,14 @@ namespace MusicTheory.Domain;
 /// </summary>
 public class Note : IEquatable<Note>
 {
+    /// <summary>
+    /// The letter name of the note (A-G)
+    /// </summary>
     public NoteName Name { get; set; }
+
+    /// <summary>
+    /// The accidental of the note (e.g., sharp, flat, natural)
+    /// </summary>
     public Accidental Accidental { get; set; }
 
     // Natural note base semitone values relative to C = 0.
@@ -107,14 +114,40 @@ public class Note : IEquatable<Note>
     public static Note Parse(string noteStr)
     {
         if (string.IsNullOrWhiteSpace(noteStr))
+        {
             throw new ArgumentException("Note string is empty");
+        }
+
         noteStr = noteStr.Trim();
+
+        // Get the note letter from the first character.
         char letterChar = char.ToUpper(noteStr[0]);
+
         if (letterChar < 'A' || letterChar > 'G')
+        {
             throw new ArgumentException($"Invalid note letter: {letterChar}");
+        }
+
         NoteName letter = (NoteName)("ABCDEFG".IndexOf(letterChar));
-        string accidentalPart = noteStr[1..]; // substring after the letter
+
+        // Get and normalize accidental string (everything after the letter).
+        string accidentalPart = noteStr.Length > 1 ? noteStr[1..].Trim().ToLowerInvariant() : "";
+
+        // Normalize common accidental formats.
+        if (accidentalPart.Contains("sharp"))
+        {
+            accidentalPart = "#";
+        }
+        else if (accidentalPart.Contains("flat"))
+        {
+            accidentalPart = "b";
+        }
+
+        // Remove any hyphens or spaces (for inputs like "C-Sharp" or "b-flat").
+        accidentalPart = accidentalPart.Replace("-", "").Replace(" ", "");
+
         Accidental accidental = Accidental.Natural;
+
         if (!string.IsNullOrEmpty(accidentalPart))
         {
             accidental = accidentalPart switch

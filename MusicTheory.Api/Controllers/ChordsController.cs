@@ -23,8 +23,8 @@ public class ChordsController : ControllerBase
     }
 
     // GET: api/chords/{root}/{chordType}
-    /// <summary>Gets the notes of a chord specified by root and type</summary>
-    /// <param name="root">The root note of the chord (e.g. "D")</param>
+    /// <summary>Get the notes of a chord specified by root and type</summary>
+    /// <param name="root">The root note of the chord (e.g. "D", "C-Sharp", "b-flat")</param>
     /// <param name="chordType">The chord type (e.g. "minor", "Major")</param>
     [HttpGet("{root}/{chordType}")]
     [ProducesResponseType(typeof(Chord), 200)]

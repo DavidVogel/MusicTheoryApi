@@ -95,6 +95,22 @@ builder.Services.AddOpenApiDocument(config =>
     config.UseControllerSummaryAsTagDescription = true;
     config.PostProcess = doc =>
     {
+        // Clear the default server(s)
+        doc.Servers.Clear();
+
+        // Remove duplicative server config if present in extension data
+        if (doc.ExtensionData?.ContainsKey("servers") == true)
+        {
+            doc.ExtensionData.Remove("servers");
+        }
+
+        // Add custom server
+        doc.Servers.Add(new NSwag.OpenApiServer
+        {
+            Url = "https://musictheoryapi.com",
+            Description = "Production server"
+        });
+
         doc.Info.Title = "Music Theory API";
         doc.Info.Version = "v0.0.1";
         doc.Info.Description =
@@ -128,6 +144,7 @@ Currently, the API allows you to do the following:
 
 * [Get diatonic chords for a scale](#tag/Scales/operation/Scales_GetScaleChords)
 ";
+
         doc.Info.ExtensionData ??= new Dictionary<string, object>()!;
         doc.Info.ExtensionData["x-logo"] = new Dictionary<string, object>
         {

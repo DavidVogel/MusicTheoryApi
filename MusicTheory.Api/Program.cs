@@ -105,7 +105,7 @@ builder.Services.AddOpenApiDocument(config =>
 *Repo: [https://github.com/DavidVogel/MusicTheoryApi](https://github.com/DavidVogel/MusicTheoryApi)*
 
 
-*Base URL: [https://musictheoryapi.azurewebsites.net](https://musictheoryapi.azurewebsites.net)*
+*Base URL: [https://musictheoryapi.com](https://musictheoryapi.com)*
 
 # Introduction
 

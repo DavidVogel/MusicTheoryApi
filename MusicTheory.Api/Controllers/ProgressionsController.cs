@@ -7,7 +7,7 @@ using Asp.Versioning;
 namespace MusicTheory.Api.Controllers;
 
 /// <summary>Controller for managing chord progression requests</summary>
-[ApiVersion(1)]
+[ApiVersion(0)]
 [Authorize]
 [ApiController]
 [Route("api/v{v:apiVersion}/[controller]")]
@@ -24,11 +24,11 @@ public class ProgressionsController : ControllerBase
         _progressionService = progressionService;
     }
 
-    // GET: api/progressions/{root}/{scaleType}/common
+    // GET: api/v0/progressions/{root}/{scaleType}/common
     /// <summary>Get common chord progressions for the specified key</summary>
     /// <param name="root">The root note of the key (e.g. "E")</param>
     /// <param name="scaleType">The scale type of the key (e.g. "minor")</param>
-    [MapToApiVersion(1)]
+    [MapToApiVersion(0)]
     [HttpGet("{root}/{scaleType}/common")]
     [ProducesResponseType(typeof(IEnumerable<ChordProgression>), 200)]
     public ActionResult<IEnumerable<ChordProgression>> GetCommonProgressions(string root, string scaleType)

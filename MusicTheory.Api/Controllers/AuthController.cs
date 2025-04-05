@@ -14,7 +14,7 @@ namespace MusicTheory.Api.Controllers;
 /// <summary>
 /// Controller for user authentication (registration and login)
 /// </summary>
-[ApiVersion(1)]
+[ApiVersion(0)]
 [ApiController]
 [Route("api/v{v:apiVersion}/[controller]")]
 public class AuthController : ControllerBase
@@ -41,8 +41,8 @@ public class AuthController : ControllerBase
     /// </summary>
     /// <param name="model">Registration model containing user details</param>
     /// <returns>ActionResult indicating success or failure</returns>
-    // POST: api/Auth/register
-    [MapToApiVersion(1)]
+    // POST: api/v0/Auth/register
+    [MapToApiVersion(0)]
     [HttpPost("register")]
     [AllowAnonymous] // Allow public access to registration
     public async Task<IActionResult> Register([FromBody] RegisterDto model)
@@ -68,8 +68,8 @@ public class AuthController : ControllerBase
     /// </summary>
     /// <param name="model">Login model containing user credentials</param>
     /// <returns>ActionResult containing the JWT token</returns>
-    // POST: api/Auth/login
-    [MapToApiVersion(1)]
+    // POST: api/v0/Auth/login
+    [MapToApiVersion(0)]
     [HttpPost("login")]
     [AllowAnonymous]
     public async Task<IActionResult> Login([FromBody] LoginDto model)

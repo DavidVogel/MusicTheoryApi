@@ -7,7 +7,7 @@ using Asp.Versioning;
 namespace MusicTheory.Api.Controllers;
 
 /// <summary>Controller for handling scale-related requests</summary>
-[ApiVersion(1)]
+[ApiVersion(0)]
 [Authorize]
 [ApiController]
 [Route("api/v{v:apiVersion}/[controller]")]
@@ -24,11 +24,11 @@ public class ScalesController : ControllerBase
         _scaleService = scaleService;
     }
 
-    // GET: api/scales/{root}/{scaleType}/notes
+    // GET: api/v0/scales/{root}/{scaleType}/notes
     /// <summary>Get notes in a given scale</summary>
     /// <param name="root">The root note of the scale (e.g. "C" or "G#")</param>
     /// <param name="scaleType">The type of scale (e.g. "major", "minor", "harmonicMinor")</param>
-    [MapToApiVersion(1)]
+    [MapToApiVersion(0)]
     [HttpGet("{root}/{scaleType}/notes")]
     [ProducesResponseType(typeof(IEnumerable<string>), 200)]
     public ActionResult<IEnumerable<string>> GetScaleNotes(string root, string scaleType)
@@ -50,11 +50,11 @@ public class ScalesController : ControllerBase
         return Ok(notes);
     }
 
-    // GET: api/scales/{root}/{scaleType}/chords
+    // GET: api/v0/scales/{root}/{scaleType}/chords
     /// <summary>Get diatonic chords in a given scale</summary>
     /// <param name="root">The root note of the scale (e.g. "C")</param>
     /// <param name="scaleType">The type of scale (e.g. "major")</param>
-    [MapToApiVersion(1)]
+    [MapToApiVersion(0)]
     [HttpGet("{root}/{scaleType}/chords")]
     [ProducesResponseType(typeof(IEnumerable<Chord>), 200)]
     public ActionResult<IEnumerable<Chord>> GetScaleChords(string root, string scaleType)

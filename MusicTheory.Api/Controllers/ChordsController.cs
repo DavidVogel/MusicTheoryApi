@@ -7,7 +7,7 @@ using Asp.Versioning;
 namespace MusicTheory.Api.Controllers;
 
 /// <summary>Controller for handling chord-related requests</summary>
-[ApiVersion(1)]
+[ApiVersion(0)]
 [Authorize]
 [ApiController]
 [Route("api/v{v:apiVersion}/[controller]")]
@@ -24,11 +24,11 @@ public class ChordsController : ControllerBase
         _chordService = chordService;
     }
 
-    // GET: api/chords/{root}/{chordType}
+    // GET: api/v0/chords/{root}/{chordType}
     /// <summary>Get the notes of a chord specified by root and type</summary>
     /// <param name="root">The root note of the chord (e.g. "D", "C-Sharp", "b-flat")</param>
     /// <param name="chordType">The chord type (e.g. "minor", "Major")</param>
-    [MapToApiVersion(1)]
+    [MapToApiVersion(0)]
     [HttpGet("{root}/{chordType}")]
     [ProducesResponseType(typeof(Chord), 200)]
     public ActionResult<Chord> GetChord(string root, string chordType)

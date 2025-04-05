@@ -2,13 +2,15 @@ using MusicTheory.Domain;
 using MusicTheory.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Asp.Versioning;
 
 namespace MusicTheory.Api.Controllers;
 
 /// <summary>Controller for handling chord-related requests</summary>
+[ApiVersion(1)]
 [Authorize]
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v{v:apiVersion}/[controller]")]
 public class ChordsController : ControllerBase
 {
     private readonly IChordService _chordService;
@@ -26,6 +28,7 @@ public class ChordsController : ControllerBase
     /// <summary>Get the notes of a chord specified by root and type</summary>
     /// <param name="root">The root note of the chord (e.g. "D", "C-Sharp", "b-flat")</param>
     /// <param name="chordType">The chord type (e.g. "minor", "Major")</param>
+    [MapToApiVersion(1)]
     [HttpGet("{root}/{chordType}")]
     [ProducesResponseType(typeof(Chord), 200)]
     public ActionResult<Chord> GetChord(string root, string chordType)

@@ -7,14 +7,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Asp.Versioning;
 
 namespace MusicTheory.Api.Controllers;
 
 /// <summary>
 /// Controller for user authentication (registration and login)
 /// </summary>
+[ApiVersion(1)]
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v{v:apiVersion}/[controller]")]
 public class AuthController : ControllerBase
 {
     // Identity takes care of hashing the password and storing the user record in the database.
@@ -40,6 +42,7 @@ public class AuthController : ControllerBase
     /// <param name="model">Registration model containing user details</param>
     /// <returns>ActionResult indicating success or failure</returns>
     // POST: api/Auth/register
+    [MapToApiVersion(1)]
     [HttpPost("register")]
     [AllowAnonymous] // Allow public access to registration
     public async Task<IActionResult> Register([FromBody] RegisterDto model)
@@ -66,6 +69,7 @@ public class AuthController : ControllerBase
     /// <param name="model">Login model containing user credentials</param>
     /// <returns>ActionResult containing the JWT token</returns>
     // POST: api/Auth/login
+    [MapToApiVersion(1)]
     [HttpPost("login")]
     [AllowAnonymous]
     public async Task<IActionResult> Login([FromBody] LoginDto model)

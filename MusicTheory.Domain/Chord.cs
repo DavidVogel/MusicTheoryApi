@@ -49,8 +49,7 @@ public class Chord
     private List<Note> GenerateChordNotes(Note root, ChordType type)
     {
         var notes = new List<Note> { root };
-        if (!ChordIntervals.ContainsKey(type))
-            return notes;
+        if (!ChordIntervals.ContainsKey(type)) return notes;
         int[] intervals = ChordIntervals[type];
         int rootPitch = root.PitchClass;
         int rootLetterIndex = (int)root.Name;

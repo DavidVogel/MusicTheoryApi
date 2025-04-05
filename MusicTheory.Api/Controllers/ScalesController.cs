@@ -2,13 +2,15 @@ using MusicTheory.Domain;
 using MusicTheory.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Asp.Versioning;
 
 namespace MusicTheory.Api.Controllers;
 
 /// <summary>Controller for handling scale-related requests</summary>
+[ApiVersion(1)]
 [Authorize]
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v{v:apiVersion}/[controller]")]
 public class ScalesController : ControllerBase
 {
     private readonly IScaleService _scaleService;
@@ -26,6 +28,7 @@ public class ScalesController : ControllerBase
     /// <summary>Get notes in a given scale</summary>
     /// <param name="root">The root note of the scale (e.g. "C" or "G#")</param>
     /// <param name="scaleType">The type of scale (e.g. "major", "minor", "harmonicMinor")</param>
+    [MapToApiVersion(1)]
     [HttpGet("{root}/{scaleType}/notes")]
     [ProducesResponseType(typeof(IEnumerable<string>), 200)]
     public ActionResult<IEnumerable<string>> GetScaleNotes(string root, string scaleType)
@@ -51,6 +54,7 @@ public class ScalesController : ControllerBase
     /// <summary>Get diatonic chords in a given scale</summary>
     /// <param name="root">The root note of the scale (e.g. "C")</param>
     /// <param name="scaleType">The type of scale (e.g. "major")</param>
+    [MapToApiVersion(1)]
     [HttpGet("{root}/{scaleType}/chords")]
     [ProducesResponseType(typeof(IEnumerable<Chord>), 200)]
     public ActionResult<IEnumerable<Chord>> GetScaleChords(string root, string scaleType)

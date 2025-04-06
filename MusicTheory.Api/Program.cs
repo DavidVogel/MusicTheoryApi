@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using MusicTheory.Domain;
 using Asp.Versioning;
+using NSwag;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -106,45 +107,23 @@ builder.Services.AddOpenApiDocument(config =>
         }
 
         // Add custom server
-        doc.Servers.Add(new NSwag.OpenApiServer
+        doc.Servers.Add(new OpenApiServer
         {
             Url = "https://musictheoryapi.com",
             Description = "Production server"
         });
 
-        doc.Info.Title = "Music Theory API";
-        doc.Info.Version = "v0.0.1";
-        doc.Info.Description =
-            @"
-*Created by David Vogel*
-
-
-*Repo: [https://github.com/DavidVogel/MusicTheoryApi](https://github.com/DavidVogel/MusicTheoryApi)*
-
-
-*Base URL: [https://musictheoryapi.com](https://musictheoryapi.com)*
-
-# Introduction
-
-The Music Theory API is currently a toy project for me to both practice my developer skills and demonstrate technical writing knowledge around APIs, SaaS, DevOps, and InfoSec. It currently provides minimal functionality for basic music theory questions, but the documentation covers everything necessary for a development team to work on and support the API as well as how a client would consume it.
-
-
-To start using the API, you must [register using an email address and password](#tag/Auth/operation/Auth_Register).
-
-
-Once registered, you can [obtain a JWT token](#tag/Auth/operation/Auth_Login) to make further requests.
-
-
-Currently, the API allows you to do the following:
-
-* [Get the notes of a chord](#tag/Chords/operation/Chords_GetChord)
-
-* [Get common chord progressions for a key (both Roman numerals and note spellings / pitch classes)](#tag/Progressions/operation/Progressions_GetCommonProgressions)
-
-* [Get notes for a scale](#tag/Scales/operation/Scales_GetScaleNotes)
-
-* [Get diatonic chords for a scale](#tag/Scales/operation/Scales_GetScaleChords)
-";
+        doc.Info = new OpenApiInfo
+        {
+            Title = "Music Theory API",
+            Version = "v0.0.1",
+            Description = "API for music theory concepts and operations",
+            License = new OpenApiLicense
+            {
+                Name = "Elastic License 2.0",
+                Url = "https://www.elastic.co/licensing/elastic-license"
+            },
+        };
 
         doc.Info.ExtensionData ??= new Dictionary<string, object>()!;
         doc.Info.ExtensionData["x-logo"] = new Dictionary<string, object>
@@ -152,7 +131,8 @@ Currently, the API allows you to do the following:
             { "url", "/img/george-crumb-notation.jpg" },
             { "altText", "Music Theory API Logo" }
         };
-        doc.Tags = new List<NSwag.OpenApiTag>
+
+        doc.Tags = new List<OpenApiTag>
         {
             new()
             {

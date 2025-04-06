@@ -26,11 +26,14 @@ public class ScalesController : ControllerBase
 
     // GET: api/v0/scales/{root}/{scaleType}/notes
     /// <summary>Get notes in a given scale</summary>
-    /// <param name="root">The root note of the scale (e.g. "C" or "G#")</param>
-    /// <param name="scaleType">The type of scale (e.g. "major", "minor", "harmonicMinor")</param>
+    /// <param name="root">The root note of the scale (e.g. "C", "G-Sharp", "B-Flat")</param>
+    /// <param name="scaleType">The type of scale (e.g. "Major", "Minor", "HarmonicMinor")</param>
+    /// <response code="200">Returns a list of notes in the scale</response>
+    /// <response code="400">Bad Request</response>
     [MapToApiVersion(0)]
     [HttpGet("{root}/{scaleType}/notes")]
     [ProducesResponseType(typeof(IEnumerable<string>), 200)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ActionResult<IEnumerable<string>> GetScaleNotes(string root, string scaleType)
     {
         // Parse inputs
@@ -52,11 +55,14 @@ public class ScalesController : ControllerBase
 
     // GET: api/v0/scales/{root}/{scaleType}/chords
     /// <summary>Get diatonic chords in a given scale</summary>
-    /// <param name="root">The root note of the scale (e.g. "C")</param>
-    /// <param name="scaleType">The type of scale (e.g. "major")</param>
+    /// <param name="root">The root note of the scale (e.g. "C", "F-Sharp", "A-Flat")</param>
+    /// <param name="scaleType">The type of scale ("Major" or "Minor")</param>
+    /// <response code="200">Returns a list of diatonic chords in the scale</response>
+    /// <response code="400">Bad Request</response>
     [MapToApiVersion(0)]
     [HttpGet("{root}/{scaleType}/chords")]
     [ProducesResponseType(typeof(IEnumerable<Chord>), 200)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ActionResult<IEnumerable<Chord>> GetScaleChords(string root, string scaleType)
     {
         Note rootNote;

@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MusicTheory.Api.Models;
 
 /// <summary>
@@ -6,12 +8,14 @@ namespace MusicTheory.Api.Models;
 public class RegisterDto
 {
     /// <summary>
-    /// Gets or sets the email address of the user
+    /// User's email
     /// </summary>
+    [Required]
     public string Email { get; set; } = null!;
 
     /// <summary>
-    /// Gets or sets the password of the user
+    /// User's password
     /// </summary>
+    [Required]
     public string Password { get; set; } = null!;
 }

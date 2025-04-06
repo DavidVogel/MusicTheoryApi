@@ -26,11 +26,14 @@ public class ProgressionsController : ControllerBase
 
     // GET: api/v0/progressions/{root}/{scaleType}/common
     /// <summary>Get common chord progressions for the specified key</summary>
-    /// <param name="root">The root note of the key (e.g. "E")</param>
-    /// <param name="scaleType">The scale type of the key (e.g. "minor")</param>
+    /// <param name="root">The root note of the key (e.g. "E", "D-Flat", "A-Sharp")</param>
+    /// <param name="scaleType">The scale type of the key ("Minor" or "Major)</param>
+    /// <response code="200">Returns a list of common chord progressions</response>
+    /// <response code="400">Bad Request</response>
     [MapToApiVersion(0)]
     [HttpGet("{root}/{scaleType}/common")]
     [ProducesResponseType(typeof(IEnumerable<ChordProgression>), 200)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ActionResult<IEnumerable<ChordProgression>> GetCommonProgressions(string root, string scaleType)
     {
         Note keyRoot;

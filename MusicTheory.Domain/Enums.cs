@@ -45,7 +45,7 @@ public enum ScaleType
 {
     Major,
     Minor,
-    HarmonicMinor /* (Additional types can be added) */
+    HarmonicMinor /* (TODO: Extend with more types) */
 }
 
 /// <summary>Types of triad chords</summary>
@@ -54,5 +54,5 @@ public enum ChordType
     Major,
     Minor,
     Diminished,
-    Augmented /* (TODO: Extend with 7th chords, etc.) */
+    Augmented /* (TODO: Extend with more types) */
 }

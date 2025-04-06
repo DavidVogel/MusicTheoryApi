@@ -250,6 +250,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseOpenApi(); // http://localhost:<port>/swagger/v1/swagger.json
     app.UseSwaggerUi();
+
+    // Add ReDoc UI to interact with the document
+    // Available at: http://localhost:<port>/redoc
+    app.UseReDoc(options =>
+    {
+        options.Path = "/redoc";
+    });
 }
 
 app.UseHttpsRedirection();

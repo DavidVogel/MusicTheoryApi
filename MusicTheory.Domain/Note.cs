@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MusicTheory.Domain;
 
 /// <summary>
@@ -8,11 +10,13 @@ public class Note : IEquatable<Note>
     /// <summary>
     /// The letter name of the note (A-G)
     /// </summary>
+    [Required]
     public NoteName Name { get; set; }
 
     /// <summary>
-    /// The accidental of the note (e.g., sharp, flat, natural)
+    /// The accidental of the note ("Sharp", "Flat", "Natural", "DoubleSharp", or "DoubleFlat")
     /// </summary>
+    [Required]
     public Accidental Accidental { get; set; }
 
     // Natural note base semitone values relative to C = 0.
@@ -27,7 +31,7 @@ public class Note : IEquatable<Note>
     /// Constructor to create a note with a given name and accidental
     /// </summary>
     /// <param name="name">The letter name of the note (A-G)</param>
-    /// <param name="accidental">The accidental of the note (e.g., sharp, flat)</param>
+    /// <param name="accidental">The accidental of the note ("Sharp", "Flat", "Natural", "DoubleSharp", or "DoubleFlat")</param>
     public Note(NoteName name, Accidental accidental = Accidental.Natural)
     {
         Name = name;

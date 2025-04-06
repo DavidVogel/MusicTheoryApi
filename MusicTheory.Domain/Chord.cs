@@ -1,23 +1,28 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MusicTheory.Domain;
 
 /// <summary>
-/// Represents a chord (triad) with a root note and chord type
+/// Represents a chord (triad only) with a root note and chord type
 /// </summary>
 public class Chord
 {
     /// <summary>
-    /// The root note of the chord (e.g., C, D#, etc.)
+    /// The root note of the chord (e.g., "C", "D-Sharp", "E-Flat", etc.)
     /// </summary>
+    [Required]
     public Note Root { get; set; }
 
     /// <summary>
-    ///  The type of chord (e.g., Major, Minor, Diminished, Augmented)
+    ///  The type of chord ("Major", "Minor", "Diminished", or "Augmented")
     /// </summary>
+    [Required]
     public ChordType Type { get; set; }
 
     /// <summary>
     /// The notes of the chord (triad) generated from the root and type
     /// </summary>
+    [Required]
     public List<Note> Notes { get; private set; }
 
     // Interval patterns for chord types (from root to other chord tones).

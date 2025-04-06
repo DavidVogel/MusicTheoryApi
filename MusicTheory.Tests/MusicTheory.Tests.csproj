@@ -7,6 +7,10 @@
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
     <ItemGroup>
         <ProjectReference Include="..\MusicTheory.Api\MusicTheory.Api.csproj"/>
         <ProjectReference Include="..\MusicTheory.Services\MusicTheory.Services.csproj"/>

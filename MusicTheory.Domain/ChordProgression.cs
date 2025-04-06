@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MusicTheory.Domain
 {
     /// <summary>
@@ -8,12 +10,14 @@ namespace MusicTheory.Domain
         /// <summary>
         /// The pattern of the chord progression, e.g., "I-IV-V" or "i-iv-v".
         /// </summary>
+        [Required]
         public string Pattern { get; set; }         // e.g., "I-IV-V" or "i-iv-v"
 
 
         /// <summary>
         /// The chords in the progression, represented as a list of Chord objects
         /// </summary>
+        [Required]
         public List<Chord> Chords { get; set; }     // The actual chords in the progression
 
         /// <summary>

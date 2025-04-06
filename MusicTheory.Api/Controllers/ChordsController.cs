@@ -26,11 +26,15 @@ public class ChordsController : ControllerBase
 
     // GET: api/v0/chords/{root}/{chordType}
     /// <summary>Get the notes of a chord specified by root and type</summary>
-    /// <param name="root">The root note of the chord (e.g. "D", "C-Sharp", "b-flat")</param>
-    /// <param name="chordType">The chord type (e.g. "minor", "Major")</param>
+    /// <param name="root">The root note of the chord (e.g. "D", "C-Sharp", "B-Flat")</param>
+    /// <param name="chordType">The chord type ("Minor", "Major", "Diminished", or "Augmented")</param>
+    /// <returns>If successful, returns a <see cref="Chord"/> object with the root, type, and notes of the chord</returns>
+    /// <response code="200">Chord returned successfully</response>
+    /// <response code="400">Bad Request</response>
     [MapToApiVersion(0)]
     [HttpGet("{root}/{chordType}")]
     [ProducesResponseType(typeof(Chord), 200)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ActionResult<Chord> GetChord(string root, string chordType)
     {
         Note rootNote;

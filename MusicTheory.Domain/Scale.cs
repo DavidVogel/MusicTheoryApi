@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MusicTheory.Domain;
 
 /// <summary>
@@ -6,18 +8,21 @@ namespace MusicTheory.Domain;
 public class Scale
 {
     /// <summary>
-    /// The root note of the scale (e.g., C, D#, etc.)
+    /// The root note of the scale (e.g., "C", "D-Sharp", "G-Flat", etc.)
     /// </summary>
+    [Required]
     public Note Root { get; set; }
 
     /// <summary>
-    /// The type of scale (e.g., Major, Minor, HarmonicMinor)
+    /// The type of scale ("Major", "Minor", or "HarmonicMinor")
     /// </summary>
+    [Required]
     public ScaleType Type { get; set; }
 
     /// <summary>
     /// The notes of the scale generated from the root and type
     /// </summary>
+    [Required]
     public List<Note> Notes { get; private set; }
 
     // Interval patterns for each scale type (semitones between successive scale notes).

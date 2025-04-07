@@ -41,17 +41,6 @@ public class AuthController : ControllerBase
     /// </summary>
     /// <param name="model">Registration model containing user details</param>
     /// <returns>Returns the result of the registration process</returns>
-    /// <remarks>
-    /// Sample request:
-    ///
-    ///     curl --location 'https://musictheoryapi.com/api/v0/auth/register' \
-    ///     --header 'Content-Type: application/json' \
-    ///     --data-raw '{
-    ///         "Email": "user@example.com",
-    ///         "Password": "MyStrongPassword123",
-    ///     }'
-    ///
-    /// </remarks>
     /// <response code="201">The user was created successfully</response>
     /// <response code="400">Bad Request</response>
     // POST: api/v0/Auth/register
@@ -79,33 +68,28 @@ public class AuthController : ControllerBase
     }
 
     /// <summary>
+    /// Authentication token response
+    /// </summary>
+    public class TokenResponse
+    {
+        /// <summary>
+        /// JWT authentication token
+        /// </summary>
+        public string Token { get; set; } = string.Empty;
+    }
+
+    /// <summary>
     /// Get a JWT token for the user
     /// </summary>
     /// <param name="model">Login model containing user credentials</param>
     /// <returns>If successful, returns a JWT token</returns>
-    /// <remarks>
-    /// Sample request:
-    ///
-    ///     curl --location 'https://musictheoryapi.com/api/v0/auth/login' \
-    ///     --header 'Content-Type: application/json' \
-    ///     --data-raw '{
-    ///         "Email": "user@example.com",
-    ///         "Password": "MyStrongPassword123",
-    ///     }'
-    ///
-    /// Successful response:
-    ///
-    ///     {
-    ///         "token": "xyz123abc456"
-    ///     }
-    ///
-    /// </remarks>
     /// <response code="200">Token generated successfully</response>
     /// <response code="401">Not authorized; invalid credentials</response>
     // POST: api/v0/Auth/login
     [MapToApiVersion(0)]
     [HttpPost("login")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(TokenResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [AllowAnonymous]
     public async Task<IActionResult> Login([FromBody] LoginDto model)
@@ -151,6 +135,6 @@ public class AuthController : ControllerBase
         var securityToken = tokenHandler.CreateToken(tokenDescriptor);
         string tokenString = tokenHandler.WriteToken(securityToken);
 
-        return Ok(new { token = tokenString });
+        return Ok(new TokenResponse { Token = tokenString });
     }
 }

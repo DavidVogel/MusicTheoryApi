@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Asp.Versioning;
+using MusicTheory.Domain.Examples;
 
 namespace MusicTheory.Api.Controllers;
 
@@ -48,6 +49,7 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ReDocCodeSample("curl", "file://Controllers/Examples/POST_register_example.curl.txt")]
     [AllowAnonymous] // Allow public access to registration
     public async Task<IActionResult> Register([FromBody] RegisterDto model)
     {
@@ -91,6 +93,7 @@ public class AuthController : ControllerBase
     [Produces("application/json")]
     [ProducesResponseType(typeof(TokenResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ReDocCodeSample("curl", "file://Controllers/Examples/POST_login_example.curl.txt")]
     [AllowAnonymous]
     public async Task<IActionResult> Login([FromBody] LoginDto model)
     {

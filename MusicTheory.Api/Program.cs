@@ -9,6 +9,8 @@ using System.Text;
 using MusicTheory.Domain;
 using Asp.Versioning;
 using NSwag;
+using NSwag.Examples;
+using MusicTheory.Domain.Examples;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -90,10 +92,16 @@ builder.Services.AddScoped<IProgressionService, ProgressionService>();
 builder.Services.AddSingleton<IScaleRepository, InMemoryScaleRepository>();
 builder.Services.AddSingleton<IProgressionRepository, InMemoryProgressionRepository>();
 
+// Configure examples
+builder.Services.AddExampleProviders(typeof(ChordProgressionExample).Assembly);
+builder.Services.AddExampleProviders(typeof(ChordProgressionsExample).Assembly);
+builder.Services.AddExampleProviders(typeof(ChordExample).Assembly);
+
 // Add Swagger for API documentation
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApiDocument(config =>
+builder.Services.AddOpenApiDocument((config, provider) =>
 {
+    config.AddExamples(provider);
     config.UseControllerSummaryAsTagDescription = true;
     config.PostProcess = doc =>
     {

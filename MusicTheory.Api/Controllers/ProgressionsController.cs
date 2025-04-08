@@ -3,6 +3,7 @@ using MusicTheory.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Asp.Versioning;
+using MusicTheory.Utils;
 
 namespace MusicTheory.Api.Controllers;
 
@@ -34,6 +35,7 @@ public class ProgressionsController : ControllerBase
     [HttpGet("{root}/{scaleType}/common")]
     [ProducesResponseType(typeof(IEnumerable<ChordProgression>), 200)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ReDocCodeSample("cURL", "file://Controllers/Examples/GET_common_chord_progressions_example.curl.txt")]
     public ActionResult<IEnumerable<ChordProgression>> GetCommonProgressions(string root, string scaleType)
     {
         Note keyRoot;

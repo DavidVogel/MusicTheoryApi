@@ -10,7 +10,11 @@ using MusicTheory.Domain;
 using Asp.Versioning;
 using NSwag;
 using NSwag.Examples;
-using MusicTheory.Domain.Examples;
+using MusicTheory.Api.Middleware;
+using MusicTheory.Api.Controllers.Examples;
+using MusicTheory.Api.Utils;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -92,16 +96,23 @@ builder.Services.AddScoped<IProgressionService, ProgressionService>();
 builder.Services.AddSingleton<IScaleRepository, InMemoryScaleRepository>();
 builder.Services.AddSingleton<IProgressionRepository, InMemoryProgressionRepository>();
 
-// Configure examples
-builder.Services.AddExampleProviders(typeof(ChordProgressionExample).Assembly);
-builder.Services.AddExampleProviders(typeof(ChordProgressionsExample).Assembly);
+// Configure examples (note that you only need to register the assembly once)
 builder.Services.AddExampleProviders(typeof(ChordExample).Assembly);
+// builder.Services.AddExampleProviders(typeof(ChordProgressionsExample).Assembly);
 
 // Add Swagger for API documentation
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApiDocument((config, provider) =>
 {
     config.AddExamples(provider);
+
+    // Register the ScaleNotes example processor.
+    config.OperationProcessors.Add(new ScaleNotesExampleOperationProcessor());
+
+    // Register the ScaleChords example processor.
+    // var chordExampleProvider = provider.GetRequiredService<IExampleProvider<Chord>>();
+    // config.OperationProcessors.Add(new ScaleChordsExampleOperationProcessor(chordExampleProvider));
+
     config.UseControllerSummaryAsTagDescription = true;
     config.PostProcess = doc =>
     {
@@ -204,7 +215,25 @@ builder.Services.AddOpenApiDocument((config, provider) =>
                     ["x-displayName"] = "The Chord Progression Model",
                     ["description"] = "<SchemaDefinition schemaRef=\"#/components/schemas/ChordProgression\" />"
                 }!
-            }
+            },
+            new()
+            {
+                Name = "scale_model",
+                ExtensionData = new Dictionary<string, object>
+                {
+                    ["x-displayName"] = "The Scale Model",
+                    ["description"] = "<SchemaDefinition schemaRef=\"#/components/schemas/Scale\" />"
+                }!
+            },
+            new()
+            {
+                Name = "scaletype_model",
+                ExtensionData = new Dictionary<string, object>
+                {
+                    ["x-displayName"] = "The Scale Type Model",
+                    ["description"] = "<SchemaDefinition schemaRef=\"#/components/schemas/ScaleType\" />"
+                }!
+            },
         };
         doc.ExtensionData ??= new Dictionary<string, object>()!;
         doc.ExtensionData["x-tagGroups"] = new[]
@@ -226,13 +255,72 @@ builder.Services.AddOpenApiDocument((config, provider) =>
                     "registerdto_model",
                     "logindto_model",
                     "chord_model",
+                    "chordtype_model",
+                    "chord_progression_model",
+                    "scale_model",
+                    "scaletype_model",
                     "note_model",
                     "notename_model",
-                    "chordtype_model",
-                    "chord_progression_model"
                 }
             }
         };
+
+        // Find the Chord schema and add an example to it
+        if (doc.Components.Schemas.TryGetValue("Chord", out var chordSchema))
+        {
+            // Create an instance of the example provider
+            var exampleProvider = provider.GetRequiredService<IExampleProvider<Chord>>();
+
+            // Get the example object
+            var example = exampleProvider.GetExample();
+
+            // Create settings with string enum conversion
+            var settings = new Newtonsoft.Json.JsonSerializerSettings
+            {
+                Converters = { new Newtonsoft.Json.Converters.StringEnumConverter() }
+            };
+
+            // Convert to a serializable format and add to the schema
+            chordSchema.Example = JObject.FromObject(example, Newtonsoft.Json.JsonSerializer.Create(settings));
+        }
+
+        // Find the ChordProgression schema and add an example to it
+        if (doc.Components.Schemas.TryGetValue("ChordProgression", out var progressionSchema))
+        {
+            var progressionExampleProvider = provider.GetRequiredService<IExampleProvider<IEnumerable<ChordProgression>>>();
+            var progressionExample = progressionExampleProvider.GetExample();
+            var settings = new JsonSerializerSettings
+            {
+                Converters = { new Newtonsoft.Json.Converters.StringEnumConverter() }
+            };
+            progressionSchema.Example = JToken.FromObject(progressionExample,
+                JsonSerializer.Create(settings));
+        }
+
+        // Example assignment for Scale schema
+        if (doc.Components.Schemas.TryGetValue("Scale", out var scaleSchema))
+        {
+            var scaleExampleProvider = provider.GetRequiredService<IExampleProvider<Scale>>();
+            var scaleExample = scaleExampleProvider.GetExample();
+            var settings = new JsonSerializerSettings
+            {
+                Converters = { new Newtonsoft.Json.Converters.StringEnumConverter() }
+            };
+            scaleSchema.Example = JToken.FromObject(scaleExample,
+                JsonSerializer.Create(settings));
+        }
+
+        // Example assignment for ScaleNotesResponse schema
+        if (doc.Components.Schemas.TryGetValue("ScaleNotesResponse", out var scaleNotesSchema))
+        {
+            var scaleNotesExampleProvider = provider.GetRequiredService<IExampleProvider<ScaleNotesResponse>>();
+            var scaleNotesExample = scaleNotesExampleProvider.GetExample();
+            var settings = new Newtonsoft.Json.JsonSerializerSettings
+            {
+                Converters = { new Newtonsoft.Json.Converters.StringEnumConverter() }
+            };
+            scaleNotesSchema.Example = Newtonsoft.Json.Linq.JToken.FromObject(scaleNotesExample, Newtonsoft.Json.JsonSerializer.Create(settings));
+        }
     };
 });
 
@@ -261,11 +349,10 @@ if (app.Environment.IsDevelopment())
 
     // Add ReDoc UI to interact with the document
     // Available at: http://localhost:<port>/redoc
-    app.UseReDoc(options =>
-    {
-        options.Path = "/redoc";
-    });
+    app.UseReDoc(options => { options.Path = "/redoc"; });
 }
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 

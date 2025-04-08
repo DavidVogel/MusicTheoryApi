@@ -3,6 +3,8 @@ using MusicTheory.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Asp.Versioning;
+using MusicTheory.Api.Utils;
+using MusicTheory.Utils;
 
 namespace MusicTheory.Api.Controllers;
 
@@ -32,8 +34,9 @@ public class ScalesController : ControllerBase
     /// <response code="400">Bad Request</response>
     [MapToApiVersion(0)]
     [HttpGet("{root}/{scaleType}/notes")]
-    [ProducesResponseType(typeof(IEnumerable<string>), 200)]
+    [ProducesResponseType(typeof(ScaleNotesResponse), 200)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ReDocCodeSample("cURL", "file://Controllers/Examples/GET_scale_example.curl.txt")]
     public ActionResult<IEnumerable<string>> GetScaleNotes(string root, string scaleType)
     {
         // Parse inputs
@@ -63,6 +66,7 @@ public class ScalesController : ControllerBase
     [HttpGet("{root}/{scaleType}/chords")]
     [ProducesResponseType(typeof(IEnumerable<Chord>), 200)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ReDocCodeSample("cURL", "file://Controllers/Examples/GET_diatonic_chords_of_scale_example.curl.txt")]
     public ActionResult<IEnumerable<Chord>> GetScaleChords(string root, string scaleType)
     {
         Note rootNote;

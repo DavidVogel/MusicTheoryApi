@@ -1,6 +1,7 @@
+using MusicTheory.Domain;
 using NSwag.Examples;
 
-namespace MusicTheory.Domain.Examples;
+namespace MusicTheory.Api.Controllers.Examples;
 
 /// <summary>
 /// Example provider for the Chord class

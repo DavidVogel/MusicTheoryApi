@@ -1,8 +1,10 @@
-using MusicTheory.Domain;
-using MusicTheory.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Asp.Versioning;
+using MusicTheory.Domain;
+using MusicTheory.Services;
+using MusicTheory.Utils;
+
 
 namespace MusicTheory.Api.Controllers;
 
@@ -35,6 +37,7 @@ public class ChordsController : ControllerBase
     [HttpGet("{root}/{chordType}")]
     [ProducesResponseType(typeof(Chord), 200)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ReDocCodeSample("cURL", "file://Controllers/Examples/GET_chord_example.curl.txt")]
     public ActionResult<Chord> GetChord(string root, string chordType)
     {
         Note rootNote;

@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Asp.Versioning;
-using MusicTheory.Domain.Examples;
+using MusicTheory.Api.Utils;
+using MusicTheory.Utils;
 
 namespace MusicTheory.Api.Controllers;
 
@@ -47,9 +48,9 @@ public class AuthController : ControllerBase
     // POST: api/v0/Auth/register
     [MapToApiVersion(0)]
     [HttpPost("register")]
-    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(UserCreatedResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ReDocCodeSample("curl", "file://Controllers/Examples/POST_register_example.curl.txt")]
+    [ReDocCodeSample("cURL", "file://Controllers/Examples/POST_register_example.curl.txt")]
     [AllowAnonymous] // Allow public access to registration
     public async Task<IActionResult> Register([FromBody] RegisterDto model)
     {
@@ -63,21 +64,15 @@ public class AuthController : ControllerBase
             Email = model.Email
         };
         var result = await _userManager.CreateAsync(user, model.Password);
-        if (result.Succeeded) return Created(); // 201 Created
+        if (result.Succeeded)
+        {
+            return Created(string.Empty,
+                new UserCreatedResponse { Message = $"{user.UserName} created successfully!" });
+        }
+
         // Return validation errors (e.g., password too weak or email already taken)
         var errors = string.Join("; ", result.Errors.Select(e => e.Description));
         return BadRequest(new { message = errors }); // 400 Bad Request
-    }
-
-    /// <summary>
-    /// Authentication token response
-    /// </summary>
-    public class TokenResponse
-    {
-        /// <summary>
-        /// JWT authentication token
-        /// </summary>
-        public string Token { get; set; } = string.Empty;
     }
 
     /// <summary>
@@ -93,7 +88,7 @@ public class AuthController : ControllerBase
     [Produces("application/json")]
     [ProducesResponseType(typeof(TokenResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ReDocCodeSample("curl", "file://Controllers/Examples/POST_login_example.curl.txt")]
+    [ReDocCodeSample("cURL", "file://Controllers/Examples/POST_login_example.curl.txt")]
     [AllowAnonymous]
     public async Task<IActionResult> Login([FromBody] LoginDto model)
     {

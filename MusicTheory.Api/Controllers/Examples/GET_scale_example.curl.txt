@@ -1,2 +1,2 @@
-curl --location 'https://musictheoryapi.com/api/v0/scales/db/harmonicminor/notes' \
+curl --location 'https://musictheoryapi.com/api/v0/scales/G-Sharp/harmonicminor/notes' \
 --header 'Authorization: Bearer {token}'

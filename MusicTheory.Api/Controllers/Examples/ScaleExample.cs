@@ -12,7 +12,7 @@ namespace MusicTheory.Api.Controllers.Examples
         public Scale GetExample()
         {
             // Create a D flat note.
-            var rootNote = new Note(NoteName.D, Accidental.Flat);
+            var rootNote = new Note(NoteName.G, Accidental.Sharp);
             // Define the scale type.
             var scaleType = ScaleType.HarmonicMinor;
             // Create and return the scale.

@@ -14,7 +14,7 @@ public class ScaleExampleController : ControllerBase
     public ActionResult<Scale> GetScaleExample()
     {
         // Create a Scale using ScaleExample
-        var rootNote = new Note(NoteName.D, Accidental.Flat);
+        var rootNote = new Note(NoteName.G, Accidental.Sharp);
         var scaleType = ScaleType.HarmonicMinor;
         var scale = new Scale(rootNote, scaleType);
         return Ok(scale);

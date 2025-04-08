@@ -13,16 +13,17 @@ namespace MusicTheory.Api.Utils
             {
                 if (context.OperationDescription.Operation.Responses.TryGetValue("200", out var response))
                 {
+                    // G-Sharp Harmonic Minor Scale
                     response.Examples = new List<string>
                     {
-                        "Db",
-                        "Eb",
-                        "Fb",
-                        "Gb",
-                        "Ab",
-                        "Bbb",
-                        "C",
-                        "Db"
+                        "G#",
+                        "A#",
+                        "B",
+                        "C#",
+                        "D#",
+                        "E",
+                        "F##",
+                        "G#"
                     };
                 }
             }

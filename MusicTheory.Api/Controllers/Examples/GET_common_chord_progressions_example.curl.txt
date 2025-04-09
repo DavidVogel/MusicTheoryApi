@@ -1,2 +1,2 @@
-curl --location 'https://musictheoryapi.com/api/v0/progressions/c/major/common' \
---header 'Authorization: Bearer {token}'
+curl 'https://musictheoryapi.com/api/v0/progressions/c/major/common' \
+  --header 'Authorization: Bearer {token}'

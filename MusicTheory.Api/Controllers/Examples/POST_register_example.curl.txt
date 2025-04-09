@@ -1,6 +1,6 @@
- curl --location 'https://musictheoryapi.com/api/v0/auth/register' \
- --header 'Content-Type: application/json' \
- --data-raw '{
- 	"Email": "user@example.com",
- 	"Password": "StrongPassword123"
- }'
+curl 'https://musictheoryapi.com/api/v0/auth/register' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+    "Email": "user@example.com",
+    "Password": "StrongPassword123"
+  }'

@@ -1,13 +1,18 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using MusicTheory.Domain; // Namespace where ApplicationUser is defined
+using MusicTheory.Domain;
 
 namespace MusicTheory.Data;
 
+/// <summary>
+/// Represents the application's database context.
+/// </summary>
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ApplicationDbContext"/> class with the specified options.
+    /// </summary>
+    /// <param name="options">Options for configuring the database context.</param>
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) { }
-
-    // This context will manage Identity tables (AspNetUsers, AspNetRoles, etc.) as well as any additional entities. The call to base.OnModelCreating(builder) ensures the default Identity schema is applied. By using IdentityDbContext<TUser>, you automatically get all the necessary mappings for users, roles, and their relationships.
 }

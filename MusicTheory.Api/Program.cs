@@ -52,9 +52,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 
 // Configure JWT authentication
 var jwtConfig = builder.Configuration.GetSection("JWT");
-string jwtSecret = jwtConfig["Secret"];
-string jwtIssuer = jwtConfig["Issuer"];
-string jwtAudience = jwtConfig["Audience"];
+string jwtSecret = jwtConfig["Secret"] ?? string.Empty;
+string jwtIssuer = jwtConfig["Issuer"] ?? string.Empty;
+string jwtAudience = jwtConfig["Audience"] ?? string.Empty;
 
 // AddAuthentication configures the default scheme as JWT Bearer, then uses AddJwtBearer to set up token validation parameters.
 builder.Services.AddAuthentication(options =>
@@ -98,7 +98,6 @@ builder.Services.AddSingleton<IProgressionRepository, InMemoryProgressionReposit
 
 // Configure examples (note that you only need to register the assembly once)
 builder.Services.AddExampleProviders(typeof(ChordExample).Assembly);
-// builder.Services.AddExampleProviders(typeof(ChordProgressionsExample).Assembly);
 
 // Add Swagger for API documentation
 builder.Services.AddEndpointsApiExplorer();
@@ -151,6 +150,7 @@ builder.Services.AddOpenApiDocument((config, provider) =>
             { "altText", "Music Theory API Logo" }
         };
 
+        // Schemas for Redoc
         doc.Tags = new List<OpenApiTag>
         {
             new()
@@ -268,20 +268,13 @@ builder.Services.AddOpenApiDocument((config, provider) =>
         // Find the Chord schema and add an example to it
         if (doc.Components.Schemas.TryGetValue("Chord", out var chordSchema))
         {
-            // Create an instance of the example provider
             var exampleProvider = provider.GetRequiredService<IExampleProvider<Chord>>();
-
-            // Get the example object
             var example = exampleProvider.GetExample();
-
-            // Create settings with string enum conversion
-            var settings = new Newtonsoft.Json.JsonSerializerSettings
+            var settings = new JsonSerializerSettings
             {
                 Converters = { new Newtonsoft.Json.Converters.StringEnumConverter() }
             };
-
-            // Convert to a serializable format and add to the schema
-            chordSchema.Example = JObject.FromObject(example, Newtonsoft.Json.JsonSerializer.Create(settings));
+            chordSchema.Example = JObject.FromObject(example, JsonSerializer.Create(settings));
         }
 
         // Find the ChordProgression schema and add an example to it
@@ -315,11 +308,11 @@ builder.Services.AddOpenApiDocument((config, provider) =>
         {
             var scaleNotesExampleProvider = provider.GetRequiredService<IExampleProvider<ScaleNotesResponse>>();
             var scaleNotesExample = scaleNotesExampleProvider.GetExample();
-            var settings = new Newtonsoft.Json.JsonSerializerSettings
+            var settings = new JsonSerializerSettings
             {
                 Converters = { new Newtonsoft.Json.Converters.StringEnumConverter() }
             };
-            scaleNotesSchema.Example = Newtonsoft.Json.Linq.JToken.FromObject(scaleNotesExample, Newtonsoft.Json.JsonSerializer.Create(settings));
+            scaleNotesSchema.Example = JToken.FromObject(scaleNotesExample, JsonSerializer.Create(settings));
         }
     };
 });

@@ -1,4 +1,3 @@
-using Xunit;
 using Moq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
@@ -6,17 +5,21 @@ using MusicTheory.Domain;
 using MusicTheory.Api.Models;
 using MusicTheory.Api.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using System.Linq;
+using MusicTheory.Api.Utils;
 
 namespace MusicTheory.Tests.Controllers
 {
+    /// <summary>
+    /// Unit tests for the AuthController class.
+    /// </summary>
     public class AuthControllerTests
     {
+        /// <summary>
+        /// Tests the Register method with a valid model.
+        /// </summary>
         [Fact]
         public async Task Register_ValidModel_ReturnsCreated()
         {
-            // Arrange
             var mockUserManager = new Mock<UserManager<ApplicationUser>>(
                 new Mock<IUserStore<ApplicationUser>>().Object, null, null, null, null, null, null, null, null
             );
@@ -28,18 +31,19 @@ namespace MusicTheory.Tests.Controllers
 
             var model = new RegisterDto { Email = @"test@example.com", Password = @"Password123" };
 
-            // Act
             var result = await controller.Register(model);
 
-            // Assert
             var createdResult = Assert.IsType<CreatedResult>(result);
-            Assert.Null(createdResult.Value);
+            var userCreatedResponse = Assert.IsType<UserCreatedResponse>(createdResult.Value);
+            Assert.Equal("test@example.com created successfully!", userCreatedResponse.Message);
         }
 
+        /// <summary>
+        /// Tests the Login method with invalid credentials.
+        /// </summary>
         [Fact]
         public async Task Login_InvalidCredentials_ReturnsUnauthorized()
         {
-            // Arrange
             var mockUserManager = new Mock<UserManager<ApplicationUser>>(
                 new Mock<IUserStore<ApplicationUser>>().Object, null, null, null, null, null, null, null, null
             );
@@ -51,10 +55,8 @@ namespace MusicTheory.Tests.Controllers
 
             var model = new LoginDto { Email = @"test@example.com", Password = @"Password123" };
 
-            // Act
             var result = await controller.Login(model);
 
-            // Assert
             var unauthorizedResult = Assert.IsType<UnauthorizedObjectResult>(result);
             Assert.Contains(@"Invalid credentials", unauthorizedResult.Value.ToString());
         }

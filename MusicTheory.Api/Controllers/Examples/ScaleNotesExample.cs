@@ -1,8 +1,7 @@
-// To get NSwag to generate a Scale schema
-
 using MusicTheory.Api.Utils;
-using MusicTheory.Domain;
 using NSwag.Examples;
+
+// To get NSwag to generate a Scale schema
 
 namespace MusicTheory.Api.Controllers.Examples;
 
@@ -11,6 +10,10 @@ namespace MusicTheory.Api.Controllers.Examples;
 /// </summary>
 public class ScaleNotesExample : IExampleProvider<ScaleNotesResponse>
 {
+    /// <summary>
+    /// Provides an example of a ScaleNotesResponse object.
+    /// </summary>
+    /// <returns>A ScaleNotesResponse object with a list of notes.</returns>
     public ScaleNotesResponse GetExample()
     {
         return new ScaleNotesResponse

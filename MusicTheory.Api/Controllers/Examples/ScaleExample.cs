@@ -1,22 +1,21 @@
-// File: MusicTheory.Api/Controllers/Examples/ScaleExample.cs
 using MusicTheory.Domain;
 using NSwag.Examples;
 
-namespace MusicTheory.Api.Controllers.Examples
+namespace MusicTheory.Api.Controllers.Examples;
+
+/// <summary>
+/// Example provider for the Scale class.
+/// </summary>
+public class ScaleExample : IExampleProvider<Scale>
 {
     /// <summary>
-    /// Example provider for the Scale class.
+    /// Provides an example of a Scale object (G# Harmonic Minor).
     /// </summary>
-    public class ScaleExample : IExampleProvider<Scale>
+    /// <returns>A Scale object representing a G# Harmonic Minor scale</returns>
+    public Scale GetExample()
     {
-        public Scale GetExample()
-        {
-            // Create a D flat note.
-            var rootNote = new Note(NoteName.G, Accidental.Sharp);
-            // Define the scale type.
-            var scaleType = ScaleType.HarmonicMinor;
-            // Create and return the scale.
-            return new Scale(rootNote, scaleType);
-        }
+        var rootNote = new Note(NoteName.G, Accidental.Sharp);
+        var scaleType = ScaleType.HarmonicMinor;
+        return new Scale(rootNote, scaleType);
     }
 }

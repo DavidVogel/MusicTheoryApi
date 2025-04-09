@@ -41,14 +41,14 @@ public class ReDocCodeSampleAppender : IOperationProcessor
     public bool Process(OperationProcessorContext context)
     {
         if (context.OperationDescription.Operation.ExtensionData == null)
-            context.OperationDescription.Operation.ExtensionData = new Dictionary<string, object>();
+            context.OperationDescription.Operation.ExtensionData = new Dictionary<string, object?>();
 
         var data = context.OperationDescription.Operation.ExtensionData;
         if (!data.ContainsKey(ExtensionKey))
             data[ExtensionKey] = new List<ReDocCodeSample>();
 
-        var samples = (List<ReDocCodeSample>)data[ExtensionKey];
-        samples.Add(new ReDocCodeSample
+        var samples = (List<ReDocCodeSample>?)data[ExtensionKey];
+        samples?.Add(new ReDocCodeSample
         {
             Language = _language,
             Source = _source,

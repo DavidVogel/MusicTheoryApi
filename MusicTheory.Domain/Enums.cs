@@ -15,11 +15,15 @@ public enum NoteName
 /// <summary>Accidental offsets applied to a note</summary>
 public enum Accidental
 {
+    QuadrupleFlat = -4,
+    TripleFlat = -3,
     DoubleFlat = -2,
     Flat = -1,
     Natural = 0,
     Sharp = 1,
-    DoubleSharp = 2
+    DoubleSharp = 2,
+    TripleSharp = 3,
+    QuadrupleSharp = 4
 }
 
 /// <summary>Musical interval in semitones</summary>

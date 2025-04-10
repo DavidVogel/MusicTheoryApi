@@ -48,11 +48,15 @@ public class Note : IEquatable<Note>
         string letter = Name.ToString(); // "A", "B", ...
         string accidentalStr = Accidental switch
         {
+            Accidental.QuadrupleFlat => throw new ArgumentOutOfRangeException(nameof(Accidental), Accidental, "Invalid accidental (QuadrupleFlat)"),
+            Accidental.TripleFlat => "bbb",
             Accidental.DoubleFlat => "bb",
             Accidental.Flat => "b",
             Accidental.Natural => "",
             Accidental.Sharp => "#",
             Accidental.DoubleSharp => "##",
+            Accidental.TripleSharp => "###",
+            Accidental.QuadrupleSharp => throw new ArgumentOutOfRangeException(nameof(Accidental), Accidental, "Invalid accidental (QuadrupleSharp)"),
             _ => ""
         };
         return letter + accidentalStr;
@@ -137,8 +141,35 @@ public class Note : IEquatable<Note>
         // Get and normalize accidental string (everything after the letter).
         string accidentalPart = noteStr.Length > 1 ? noteStr[1..].Trim().ToLowerInvariant() : "";
 
+        // Remove any hyphens or spaces (for inputs like "C-Sharp" or "b-flat").
+        accidentalPart = accidentalPart.Replace("-", "").Replace(" ", "");
+
         // Normalize common accidental formats.
-        if (accidentalPart.Contains("sharp"))
+        if (accidentalPart.Contains("quadruple"))
+        {
+            throw new ArgumentException($"Invalid note accidental: {accidentalPart}");
+        }
+        if (accidentalPart.Contains("doublesharp"))
+        {
+            accidentalPart = "##";
+        }
+        else if (accidentalPart.Contains("tripleflat"))
+        {
+            accidentalPart = "bbb";
+        }
+        else if (accidentalPart.Contains("triplesharp"))
+        {
+            accidentalPart = "###";
+        }
+        else if (accidentalPart.Contains("doubleflat"))
+        {
+            accidentalPart = "bb";
+        }
+        else if (accidentalPart.Contains("doublesharp"))
+        {
+           accidentalPart = "##";
+        }
+        else if (accidentalPart.Contains("sharp"))
         {
             accidentalPart = "#";
         }
@@ -147,8 +178,7 @@ public class Note : IEquatable<Note>
             accidentalPart = "b";
         }
 
-        // Remove any hyphens or spaces (for inputs like "C-Sharp" or "b-flat").
-        accidentalPart = accidentalPart.Replace("-", "").Replace(" ", "");
+
 
         Accidental accidental = Accidental.Natural;
 
@@ -158,8 +188,10 @@ public class Note : IEquatable<Note>
             {
                 "b" => Accidental.Flat,
                 "bb" => Accidental.DoubleFlat,
+                "bbb" => Accidental.TripleFlat,
                 "#" => Accidental.Sharp,
                 "##" => Accidental.DoubleSharp,
+                "###" => Accidental.TripleSharp,
                 _ => throw new ArgumentException($"Invalid accidental: {accidentalPart}")
             };
         }

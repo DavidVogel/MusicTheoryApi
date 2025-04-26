@@ -1,12 +1,7 @@
 [[build.env]]
-name = "GOOGLE_BUILDABLE"
-value = "MusicTheory.Api/MusicTheory.Api.csproj"
-
-[[build.env]]
 name = "GOOGLE_ENTRYPOINT"
 value = "dotnet MusicTheory.Api.dll"
 
-# Exclude test projects from the build
 [[build.env]]
-name = "DOTNET_BUILD_ARGS"
-value = "--no-restore -c Release /p:SkipTests=true"
+name = "ASPNETCORE_URLS"
+value = "http://+:8080"

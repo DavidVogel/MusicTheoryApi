@@ -28,6 +28,12 @@ if (builder.Environment.IsDevelopment())
 }
 else
 {
+    builder.WebHost.ConfigureKestrel(options =>
+    {
+        var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+        options.ListenAnyIP(int.Parse(port));
+    });
+
     baseConnectionString = builder.Configuration.GetConnectionString("POSTGRESQL_CONNECTIONSTRING");
 }
 

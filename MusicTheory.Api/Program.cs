@@ -21,6 +21,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Configure EF Core to use a database
 string? baseConnectionString;
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+    options.ListenAnyIP(int.Parse(port));
+});
+
 if (builder.Environment.IsDevelopment())
 {
     // Use local PostgreSQL connection string for development
@@ -28,12 +34,6 @@ if (builder.Environment.IsDevelopment())
 }
 else
 {
-    builder.WebHost.ConfigureKestrel(options =>
-    {
-        var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
-        options.ListenAnyIP(int.Parse(port));
-    });
-
     baseConnectionString = builder.Configuration.GetConnectionString("POSTGRESQL_CONNECTIONSTRING");
 }
 

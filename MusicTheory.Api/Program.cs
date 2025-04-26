@@ -23,17 +23,17 @@ string? baseConnectionString;
 
 if (builder.Environment.IsDevelopment())
 {
-    // Use local SQL Server
-    baseConnectionString = builder.Configuration.GetConnectionString("LOCAL_CONNECTIONSTRING");
+    // Use local PostgreSQL connection string for development
+    baseConnectionString = builder.Configuration.GetConnectionString("LOCAL_POSTGRESQL_CONNECTIONSTRING");
 }
 else
 {
-    baseConnectionString = builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
+    baseConnectionString = builder.Configuration.GetConnectionString("POSTGRESQL_CONNECTIONSTRING");
 }
 
 // EnableRetryOnFailure
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(baseConnectionString,
+    options.UseNpgsql(baseConnectionString,
         connectionOptions => { connectionOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(30), null); }
     ));
 

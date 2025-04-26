@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
@@ -11,14 +11,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.3"/>
-        <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="9.0.3"/>
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.15"/>
+        <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.15"/>
         <PackageReference Include="NSwag.Examples" Version="1.0.14" />
     </ItemGroup>
 
     <ItemGroup>
         <Reference Include="Microsoft.Extensions.Identity.Stores">
-            <HintPath>..\..\..\..\..\usr\local\share\dotnet\shared\Microsoft.AspNetCore.App\9.0.3\Microsoft.Extensions.Identity.Stores.dll</HintPath>
+            <HintPath>..\..\..\..\..\usr\local\share\dotnet\shared\Microsoft.AspNetCore.App\8.0.15\Microsoft.Extensions.Identity.Stores.dll</HintPath>
         </Reference>
     </ItemGroup>
 
